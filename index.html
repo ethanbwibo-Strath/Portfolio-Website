@@ -416,28 +416,60 @@
                 <div class="md:w-1/2" data-aos="fade-left">
                     <div class="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-lg">
                         <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">Send Me a Message</h3>
-                        <form id="contact-form">
-                            <div class="mb-4">
-                                <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Your Name</label>
-                                <input type="text" name="name" id="name" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-800 dark:text-white" placeholder="John Doe">
-                            </div>
-                            <div class="mb-4">
-                                <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address</label>
-                                <input type="email" name="_replyto" id="email" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-800 dark:text-white" placeholder="john@example.com">
-                            </div>
-                            <div class="mb-4">
-                                <label for="subject" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Subject</label>
-                                <input type="text" name="subject" id="subject" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-800 dark:text-white" placeholder="Internship Opportunity">
-                            </div>
-                            <div class="mb-6">
-                                <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Message</label>
-                                <textarea name="message" id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-800 dark:text-white" placeholder="Your message here..."></textarea>
-                            </div>
-        
-                            <p id="form-status" class="hidden text-sm mt-2"></p>
 
-                    <button type="submit" class="w-full px-6 py-3 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition font-medium">Send Message</button>
-                        </form>
+                            <!-- ----- Polished Contact Form (replace your old form block) ----- -->
+                            <form id="contact-form" class="space-y-4" novalidate aria-describedby="form-status">
+                            <!-- Honeypot (visually hidden) -->
+                            <label class="sr-only" for="website">Website (leave empty)</label>
+                            <input id="website" name="website" type="text" autocomplete="off" tabindex="-1" class="sr-only">
+
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Your Name</label>
+                                <input id="name" name="name" required
+                                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-800 dark:text-white"
+                                    placeholder="John Doe">
+                            </div>
+
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address</label>
+                                <input id="email" name="email" type="email" required
+                                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-800 dark:text-white"
+                                    placeholder="john@example.com">
+                            </div>
+
+                            <div>
+                                <label for="subject" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Subject</label>
+                                <input id="subject" name="subject" required
+                                    class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-800 dark:text-white"
+                                    placeholder="Internship Opportunity">
+                            </div>
+
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Message</label>
+                                <textarea id="message" name="message" rows="4" required
+                                        class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-800 dark:text-white"
+                                        placeholder="Your message here..."></textarea>
+                            </div>
+
+                            <!-- Hidden programmatic status (for screen readers) -->
+                            <p id="form-status" class="sr-only" aria-live="polite"></p>
+
+                            <button id="submit-button" type="submit"
+                                    class="w-full inline-flex items-center justify-center gap-3 px-6 py-3 bg-primary-600 text-white rounded-md hover:bg-primary-700 transition font-medium">
+                                <!-- spinner (hidden by default) -->
+                                <svg id="btn-spinner" class="hidden w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                                </svg>
+                                <span id="btn-text">Send Message</span>
+                            </button>
+                            </form>
+
+                            <!-- Toast container (kept outside the form so it's fixed) -->
+                            <div id="toast" role="status" aria-live="polite"
+                                class="pointer-events-none fixed bottom-6 right-6 z-50 transition-all transform opacity-0 translate-y-4">
+                            <!-- content injected by JS -->
+                            </div>
                     </div>
                 </div>
             </div>
@@ -507,29 +539,109 @@
         feather.replace();
 
 
+        /* ===== Polished form submission JS ===== */
+        (function () {
+        const form = document.getElementById('contact-form');
+        const submitBtn = document.getElementById('submit-button');
+        const btnSpinner = document.getElementById('btn-spinner');
+        const btnText = document.getElementById('btn-text');
+        const toast = document.getElementById('toast');
+        const formStatus = document.getElementById('form-status');
 
-        const form = document.getElementById("contact-form");
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-            form.addEventListener("submit", async (e) => {
+        // Show toast: message (string), type: 'success' | 'error'
+        function showToast(message, type = 'success') {
+            const bgClass = type === 'success' ? 'bg-green-600 text-white' : 'bg-red-600 text-white';
+            toast.innerHTML = `
+            <div class="max-w-sm w-full p-4 rounded-lg shadow-lg ${bgClass}">
+                <div class="text-sm">${message}</div>
+            </div>
+            `;
+            // update aria-live region for screen readers
+            formStatus.textContent = message;
+
+            // show
+            toast.classList.remove('opacity-0', 'translate-y-4');
+            toast.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+
+            // auto-hide after 4s
+            setTimeout(() => {
+            toast.classList.add('opacity-0', 'translate-y-4');
+            toast.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+            }, 4000);
+        }
+
+        // Simple client validation
+        function validate({ name, email, subject, message }) {
+            if (!name || !email || !subject || !message) {
+            return 'Please fill out all fields.';
+            }
+            if (!emailRegex.test(email)) {
+            return 'Please enter a valid email address.';
+            }
+            return null;
+        }
+
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const data = {
-                name: form.name.value,
-                email: form.email.value,
-                subject: form.subject.value,
-                message: form.message.value,
-            };
+            // honeypot - if filled, silently ignore (bots)
+            const honeypot = document.getElementById('website').value;
+            if (honeypot) return;
 
-            const response = await fetch("/.netlify/functions/send-email", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const subject = document.getElementById('subject').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            const validationError = validate({ name, email, subject, message });
+            if (validationError) {
+            showToast(validationError, 'error');
+            return;
+            }
+
+            // set loading state
+            submitBtn.disabled = true;
+            btnSpinner.classList.remove('hidden');
+            btnText.classList.add('opacity-30');
+
+            try {
+            const response = await fetch('/.netlify/functions/send-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, subject, message })
             });
 
-            const result = await response.json();
-            alert(result.message);
-            if (response.ok) form.reset();
-            });
+            const result = await response.json().catch(() => ({}));
+
+            if (response.ok) {
+                showToast('✅ Message sent! I’ll get back to you soon.', 'success');
+                form.reset();
+
+                // OPTIONAL analytics hooks (uncomment if you use them)
+                // Google Analytics 4
+                if (window.gtag) {
+                try { gtag('event', 'contact_form_submit', { event_category: 'Contact', event_label: subject }); } catch {}
+                }
+                // Plausible
+                if (window.plausible) {
+                try { plausible('ContactFormSubmit'); } catch {}
+                }
+            } else {
+                // try to surface a message from the function
+                const errMsg = result?.message || 'Something went wrong — please try again later.';
+                showToast(`❌ ${errMsg}`, 'error');
+            }
+            } catch (err) {
+            showToast('⚠️ Network error. Please try again later.', 'error');
+            } finally {
+            submitBtn.disabled = false;
+            btnSpinner.classList.add('hidden');
+            btnText.classList.remove('opacity-30');
+            }
+        });
+        })();
     </script>
 </body>
 </html>
