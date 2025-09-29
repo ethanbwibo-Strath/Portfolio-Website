@@ -7,67 +7,73 @@ exports.handler = async (event, context) => {
 
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+    // 🔹 Base styles
+    const containerStart = `
+      <div style="font-family: Inter, Arial, sans-serif; background:#f9fafb; padding:30px;">
+        <div style="max-width:600px; margin:auto; background:white; border-radius:8px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
+          <!-- Header -->
+          <div style="background:#0ea5e9; color:white; padding:20px; text-align:center;">
+            <img src="https://ethan-bwibo.netlify.app/media/ethan-bwibo-logo.png" alt="Ethan Bwibo Logo" style="height:60px; margin-bottom:10px;">
+            <h1 style="margin:0; font-size:22px;">Ethan Bwibo</h1>
+            <p style="margin:0; font-size:14px;">Software Developer & Data Analyst</p>
+          </div>
+          <!-- Body -->
+          <div style="padding:25px; color:#333;">
+    `;
+
+    const containerEnd = `
+          </div>
+          <!-- Footer -->
+          <div style="background:#f9fafb; padding:15px; text-align:center; font-size:13px; color:#666;">
+            <p>Connect with me:</p>
+            <a href="https://www.linkedin.com/in/ethan-bwibo/" style="margin:0 8px; color:#0ea5e9; text-decoration:none;">LinkedIn</a> |
+            <a href="https://github.com/ethanbwibo-Strath" style="margin:0 8px; color:#0ea5e9; text-decoration:none;">GitHub</a>
+          </div>
+        </div>
+      </div>
+    `;
+
     // 🔹 Email you receive
     const msgToMe = {
-      to: "enbwibo@gmail.com",     // your inbox
-      from: "enbwibo@gmail.com",   // must be a verified sender in SendGrid
-      replyTo: email,              // lets you hit "Reply" directly
+      to: "enbwibo@gmail.com",
+      from: "enbwibo@gmail.com",
+      replyTo: email,
       subject: `[Portfolio Contact] ${subject}`,
-      text: `
-        New message from your portfolio:
-
-        Name: ${name}
-        Email: ${email}
-        Subject: ${subject}
-
-        Message:
-        ${message}
-      `,
       html: `
-        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-          <h2 style="color:#0ea5e9;">📩 New Portfolio Message</h2>
+        ${containerStart}
+          <h2 style="color:#0ea5e9; font-size:20px;">📩 New Portfolio Message</h2>
           <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+          <p><strong>Email:</strong> <a href="mailto:${email}" style="color:#0ea5e9;">${email}</a></p>
           <p><strong>Subject:</strong> ${subject}</p>
-          <hr style="margin:20px 0; border:none; border-top:1px solid #eee;">
-          <p>${message.replace(/\n/g, "<br>")}</p>
-          <hr style="margin:20px 0; border:none; border-top:1px solid #eee;">
-          <p style="font-size:0.9em; color:#555;">This message was sent from your portfolio contact form.</p>
-        </div>
+          <div style="margin:20px 0; padding:15px; background:#f3f4f6; border-radius:6px; font-size:15px;">
+            ${message.replace(/\n/g, "<br>")}
+          </div>
+          <p style="font-size:13px; color:#555;">This message was sent from your portfolio contact form.</p>
+        ${containerEnd}
       `,
     };
 
-    // 🔹 Optional: Auto-reply to the sender
+    // 🔹 Auto-reply to sender
     const msgToSender = {
       to: email,
-      from: "enbwibo@gmail.com", // same verified sender
+      from: "enbwibo@gmail.com",
       subject: `Thanks for reaching out, ${name}!`,
-      text: `
-        Hi ${name},
-
-        Thanks for contacting me! I’ve received your message and will get back to you soon.
-
-        Here’s what you sent:
-        Subject: ${subject}
-        Message: ${message}
-
-        — Ethan Bwibo
-      `,
       html: `
-        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-          <h2 style="color:#0ea5e9;">Hi ${name}, thanks for reaching out!</h2>
+        ${containerStart}
+          <h2 style="color:#0ea5e9; font-size:20px;">Hi ${name}, thanks for reaching out!</h2>
           <p>I’ve received your message and will get back to you soon.</p>
           <h4>Your Message:</h4>
           <p><strong>Subject:</strong> ${subject}</p>
-          <p>${message.replace(/\n/g, "<br>")}</p>
+          <div style="margin:15px 0; padding:15px; background:#f3f4f6; border-radius:6px; font-size:15px;">
+            ${message.replace(/\n/g, "<br>")}
+          </div>
           <br>
           <p>Best regards,</p>
           <p><strong>Ethan Bwibo</strong></p>
-        </div>
+        ${containerEnd}
       `,
     };
 
-    // Send both emails in parallel
     await sgMail.send(msgToMe);
     await sgMail.send(msgToSender);
 
