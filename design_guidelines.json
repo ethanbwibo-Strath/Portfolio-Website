@@ -1,0 +1,197 @@
+{
+  "project_name": "ethan-bwibo-portfolio",
+  "identity": {
+    "name": "Ethan Bwibo",
+    "roles": ["Software Developer", "Data Analyst", "Strathmore Tennis Captain"],
+    "bio": "Building impactful tech solutions through code, design, and data. 3rd-year Informatics & Computer Science student at Strathmore University.",
+    "availability": "Seeking Internship (Jan–Mar 2026)"
+  },
+  "design_system": {
+    "theme": {
+      "name": "Obsidian & Gold",
+      "mode": "dark",
+      "colors": {
+        "background": "#0a0a0a",
+        "surface": "#111111",
+        "primary": "#FFD700",
+        "secondary": "#FFA500",
+        "accent": "#B8860B",
+        "text": {
+          "primary": "#FFFFFF",
+          "secondary": "#A3A3A3",
+          "muted": "#525252"
+        },
+        "border": "rgba(255, 215, 0, 0.1)"
+      },
+      "gradients": {
+        "gold_rush": "linear-gradient(135deg, #FFD700 0%, #FFA500 100%)",
+        "obsidian_glow": "radial-gradient(circle at center, rgba(255, 215, 0, 0.15) 0%, rgba(10, 10, 10, 0) 70%)"
+      }
+    },
+    "typography": {
+      "headings": {
+        "font_family": "Syne, sans-serif",
+        "weights": ["700", "800"],
+        "import_url": "https://fonts.googleapis.com/css2?family=Syne:wght@700;800&display=swap"
+      },
+      "body": {
+        "font_family": "Inter, sans-serif",
+        "weights": ["400", "500"],
+        "import_url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"
+      }
+    },
+    "layout": {
+      "grid_system": "Bento Grid (CSS Grid)",
+      "spacing": "Relaxed (Tailwind p-8, gap-6)",
+      "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+    },
+    "animation": {
+      "library": "framer-motion",
+      "styles": {
+        "hover_card": "scale: 1.02, transition: { duration: 0.3 }",
+        "magnetic_button": "Spring physics tracking mouse position",
+        "text_cycle": "AnimatePresence with y-axis slide and opacity fade"
+      }
+    }
+  },
+  "assets": {
+    "images": [
+      {
+        "category": "hero_bg",
+        "url": "https://images.unsplash.com/photo-1741991109902-98bf764fb35d",
+        "alt": "Nairobi Skyline Night",
+        "usage": "Subtle background overlay with low opacity"
+      },
+      {
+        "category": "tennis_context",
+        "url": "https://images.unsplash.com/photo-1708022749272-2d49f86d28fd",
+        "alt": "Tennis Player Serving",
+        "usage": "Contextual image for Leadership/Tennis section"
+      }
+    ],
+    "existing_media": {
+      "resume": "/media/Ethan-Bwibo-Résumé.pdf",
+      "profile_pic": "/media/Me..jpg",
+      "project_images": [
+        "/media/AgriTour.jpg",
+        "/media/YouthConnect.png",
+        "/media/SDG Data Analysis.png",
+        "/media/Road Accidents Dashboard.png",
+        "/media/CheapThrills.png",
+        "/media/Hilda's Recipes.png"
+      ]
+    },
+    "lottie": {
+      "tennis_animation": "https://assets2.lottiefiles.com/packages/lf20_dumw50j4.json",
+      "fallback": "CSS animation of a bouncing tennis ball"
+    }
+  },
+  "components": [
+    {
+      "name": "MagneticButton",
+      "description": "A button that magnetically attracts to the cursor within a threshold.",
+      "props": ["children", "onClick", "className"],
+      "implementation_hint": "Use framer-motion useMotionValue and useSpring. Calculate distance from center on mouse move."
+    },
+    {
+      "name": "RoleCycler",
+      "description": "Animated text component that cycles through roles.",
+      "implementation_hint": "Use AnimatePresence with a timer. Exit direction should be opposite to entry."
+    },
+    {
+      "name": "BentoGrid",
+      "description": "Asymmetrical grid container for skills and stats.",
+      "implementation_hint": "CSS Grid with col-span-1, col-span-2 classes. Use 'obsidian' cards with 1px gold borders."
+    },
+    {
+      "name": "ProjectCard",
+      "description": "Card with spotlight hover effect.",
+      "implementation_hint": "On hover, update a radial-gradient background position based on cursor. Click triggers Drawer."
+    },
+    {
+      "name": "ProjectDrawer",
+      "description": "Slide-over drawer for project details.",
+      "implementation_hint": "Fixed position, z-50, slide in from right. Backdrop blur."
+    },
+    {
+      "name": "SpotifyWidget",
+      "description": "Mock or real Spotify 'Currently Listening'.",
+      "implementation_hint": "Use a dark card with a pulsing equalizer visualization (CSS/Framer)."
+    },
+    {
+      "name": "GlassForm",
+      "description": "Contact form with glassmorphism.",
+      "implementation_hint": "bg-white/5 or bg-black/40, backdrop-blur-xl, border-white/10."
+    }
+  ],
+  "content_mapping": {
+    "nav_links": ["About", "Projects", "Skills", "Contact"],
+    "skills": {
+      "languages": ["Python", "PHP", "Java", "Kotlin", "JavaScript/TypeScript", "SQL"],
+      "frameworks": ["React", "Next.js", "Express", "Android SDK", "Firebase"],
+      "data_science": ["Pandas", "NumPy", "Matplotlib", "Seaborn", "Plotly"]
+    },
+    "projects": [
+      {
+        "title": "AgriTour",
+        "year": "2025",
+        "desc": "Android solution bridging theoretical agriculture studies and field experience.",
+        "tags": ["Kotlin", "Android SDK", "Firebase"],
+        "image": "/media/AgriTour.jpg"
+      },
+      {
+        "title": "YouthConnect",
+        "year": "2025",
+        "desc": "Platform linking parents with coaches for extracurriculars.",
+        "tags": ["React", "Node.js", "MongoDB"],
+        "image": "/media/YouthConnect.png"
+      },
+      {
+        "title": "SDGs Dashboard",
+        "year": "2025",
+        "desc": "Data visualization tracking UN SDG progress in Kenya.",
+        "tags": ["Python", "Pandas", "Plotly"],
+        "image": "/media/SDG Data Analysis.png"
+      },
+      {
+        "title": "Road Accidents Dashboard",
+        "year": "2025",
+        "desc": "Insights on causes and solutions to road accidents in Kenya.",
+        "tags": ["Python", "Pandas", "Plotly"],
+        "image": "/media/Road Accidents Dashboard.png"
+      }
+    ],
+    "leadership": [
+      {
+        "role": "Treasurer & Team Captain",
+        "org": "Strathmore University Tennis Team",
+        "period": "2024-2025"
+      },
+      {
+        "role": "Volunteer",
+        "org": "Kilimani Primary School",
+        "desc": "Tech support & Student registration"
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "1. Initialize a Next.js 14 app structure (using 'src' directory).",
+    "2. Configure Tailwind CSS with the 'Obsidian & Gold' palette in tailwind.config.js.",
+    "3. Create the 'components/ui' folder for reusable atoms (Buttons, Cards).",
+    "4. Implement the 'MagneticButton' and 'RoleCycler' in the Hero section.",
+    "5. Build the 'BentoGrid' for the Skills/Leadership section.",
+    "6. Use 'framer-motion' for all animations. DO NOT use CSS transitions for layout changes.",
+    "7. Ensure the Contact form uses the 'GlassForm' style.",
+    "8. Use the provided asset URLs. If local media is missing, use placeholders but keep the paths.",
+    "9. STRICTLY use .js or .jsx extensions. Do not use TypeScript (.ts/.tsx).",
+    "10. Add 'data-testid' to all interactive elements."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Do not use gradients for dark colors.",
+    "Avoid generic centered layouts; use asymmetry.",
+    "Use 2-3x more spacing (p-8, p-12) than standard.",
+    "Dark mode is the default and ONLY mode for this bespoke portfolio.",
+    "Use 'sonner' for toast notifications.",
+    "Export components as named exports."
+  ]
+}
