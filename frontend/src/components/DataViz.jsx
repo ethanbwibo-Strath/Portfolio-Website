@@ -75,11 +75,11 @@ function SVGNodes() {
           key={i}
           cx={n.x} cy={n.y} r={n.r}
           fill="rgba(255,215,0,0.4)"
-          initial={{ scale: 0, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.4 + i * 0.1, type: 'spring' }}
-          animate={{ r: [n.r, n.r + 2, n.r] }}
+          transition={{ delay: 0.4 + i * 0.1, duration: 0.5 }}
+          animate={{ opacity: [0.4, 0.8, 0.4] }}
         />
       ))}
     </svg>
